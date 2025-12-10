@@ -1,12 +1,12 @@
 # Node
 node_modules/
+npm-debug.log*
+yarn.lock
+package-lock.json
 
-# Data (do not version participant data)
-backend/data/*.json
-
-# OS junk
+# OS cruft
 .DS_Store
+Thumbs.db
 
-# Editor junk
-.vscode/
-*.swp
+# Data files (optional; if you don’t want raw subject data in the repo)
+data/results.json
