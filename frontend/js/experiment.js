@@ -346,8 +346,8 @@ function showColorScreening() {
 }
 
 const plates = [
-  { src: "colorblindness_screening_01.png", correct: ["12"] },
-  { src: "colorblindness_screening_02.png", correct: ["8", "circle"] }
+  { src: "colorblindness_screening_01.jpg", correct: ["12"] },
+  { src: "colorblindness_screening_02.jpg", correct: ["8", "circle"] }
 ];
 
 const plateResponses = [];
