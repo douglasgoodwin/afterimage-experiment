@@ -311,18 +311,19 @@ screenDiv.appendChild(div);
 }
 
 function showDebrief() {
-clearScreen();
-const div = document.createElement("div");
-div.innerHTML = `
-  <h2>Thank you</h2>
-  <p>Thank you for participating. This experiment examines how afterimages behave on different background colors and whether certain combinations can produce unusual color experiences.</p>
-  <p>Your responses have been recorded.</p>
-  <p>You may now close this window.</p>
-`;
-screenDiv.appendChild(div);
+	clearScreen();
+	const div = document.createElement("div");
+	div.innerHTML = `
+	  <h2>Thank you</h2>
+	  <p>Thank you for participating. This experiment examines how afterimages behave on different background colors and whether certain combinations can produce unusual color experiences.</p>
+	  <p>Your responses have been recorded.</p>
+	  <p>You may now close this window.</p>
+	`;
+	screenDiv.appendChild(div);
 
-// For now: print data to console; replace with a POST request to your server.
-console.log("Participant data:", JSON.stringify(participant, null, 2));
+	// For now: print data to console; replace with a POST request to your server.
+	console.log("Participant data:", JSON.stringify(participant, null, 2));
+	submitResults(participant);
 }
 
 function showColorScreening() {
@@ -392,6 +393,29 @@ function showPlate(index) {
   div.appendChild(btn);
 
   screenDiv.appendChild(div);
+}
+
+async function submitResults(resultData) {
+  try {
+    const response = await fetch('/api/results', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(resultData)
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      console.error('Server error:', response.status, text);
+      return;
+    }
+
+    const json = await response.json();
+    console.log('Saved:', json);
+  } catch (err) {
+    console.error('Network error submitting results:', err);
+  }
 }
 
 // Start
