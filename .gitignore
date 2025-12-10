@@ -1,0 +1,12 @@
+# Node
+node_modules/
+
+# Data (do not version participant data)
+backend/data/*.json
+
+# OS junk
+.DS_Store
+
+# Editor junk
+.vscode/
+*.swp

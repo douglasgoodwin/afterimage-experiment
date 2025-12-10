@@ -1,0 +1,33 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: sans-serif;
+  background: #111;
+  color: #eee;
+}
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+#stimulusCanvas {
+  border: 1px solid #444;
+  background: #808080;
+}
+.hidden {
+  display: none;
+}
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-size: 16px;
+}
+label {
+  display: block;
+  margin-top: 10px;
+}
