@@ -54,6 +54,16 @@ body {
   display: none;
 }
 
+/* Colorblindness screening images */
+
+.screening-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+  margin: 1.25rem auto;
+}
+
 /* Buttons: usable on desktop, overridden/enlarged on mobile */
 
 button {

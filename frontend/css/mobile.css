@@ -160,6 +160,12 @@ body {
   margin: 0.5rem 0 1rem 0;
 }
 
+/* Screening images on mobile */
+#screen .screening-image {
+  max-width: 90%;
+  margin: 1rem auto;
+}
+
 /* 8. Phone-specific tweaks (narrow screens) */
 
 @media (max-width: 480px) {

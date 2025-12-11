@@ -262,7 +262,7 @@ div.innerHTML = `
 	</select>
   </label>
 
-  <label>For how much of the 20 seconds did you see the circle?<br>
+  <label>For how much of the 30 seconds did you see the circle?<br>
 	<input type="range" id="q_duration" min="0" max="30" value="15">
 	<span id="q_duration_label">15 seconds</span>
   </label>
@@ -374,7 +374,8 @@ function showPlate(index) {
 
   const img = document.createElement("img");
   img.src = plate.src;
-  img.style.maxWidth = "500px";
+  img.className = "screening-image";
+  img.style.maxWidth = "min(500px, 85vw)"; // Responsive: smaller of 500px or 85% viewport width
   img.style.display = "block";
   img.style.margin = "20px auto";
 
