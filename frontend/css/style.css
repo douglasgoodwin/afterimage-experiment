@@ -1,33 +1,99 @@
-html, body {
+/* Base reset and typography */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: #111;
   color: #eee;
+  line-height: 1.5;
 }
+
+/* Main container: centered on larger screens, with padding */
+
 #container {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100%;
+  align-items: center;
+  padding: 2rem;
   text-align: center;
 }
+
+/* If you ever show #screen on desktop, give it a max width */
+
+#screen {
+  width: 100%;
+  max-width: 800px;
+}
+
+/* Stimulus canvas */
+
 #stimulusCanvas {
   border: 1px solid #444;
   background: #808080;
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+  height: auto;
+  touch-action: none; /* Prevent touch gestures on the canvas */
 }
+
+/* Simple utility */
+
 .hidden {
   display: none;
 }
+
+/* Buttons: usable on desktop, overridden/enlarged on mobile */
+
 button {
-  padding: 10px 20px;
-  margin-top: 20px;
-  font-size: 16px;
+  padding: 0.6rem 1.4rem;
+  margin-top: 1.25rem;
+  font-size: 1rem;
+  border-radius: 999px;
+  border: none;
+  background: #2f8cff;
+  color: #fff;
+  cursor: pointer;
 }
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Labels and basic form layout */
+
 label {
   display: block;
-  margin-top: 10px;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  margin-top: 0.25rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.4rem;
+  border: 1px solid #444;
+  background: #181818;
+  color: #eee;
+  font-size: 0.95rem;
 }

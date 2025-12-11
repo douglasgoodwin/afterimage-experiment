@@ -1,12 +1,14 @@
-
 // ---------- CONFIG ----------
-const ADAPTATION_MS = 10000; // 20 s
-const TEST_MS = 20000;       // 30 s
+// 15 s adaptation, 20 s test
+const ADAPTATION_MS = 15000;
+const TEST_MS = 20000;
 
 // Colors (tune these):
 const GRAY_BG = "#808080";                 // neutral gray
 const MAGENTA = "rgb(255, 0, 255)";        // purple inducer (adjust)
-const GULLY_GREEN = "rgb(1,254,205)";  // example; replace with your computed green
+<!-- const GULLY_GREEN = "rgb(1,254,205)";  	   // example; replace with gully green -->
+const GULLY_GREEN = "rgb(0,255,140)";  	   // gully green
+
 
 // ---------- STATE ----------
 const participant = {
@@ -116,8 +118,8 @@ div.innerHTML = `
   <p>Please sit at arm's length from the screen and maximize this window.</p>
   <p>In each trial you will:</p>
   <ol>
-	<li>Stare at a small cross in the center of a colored circle for 20 seconds.</li>
-	<li>Keep your eyes fixed on the cross when the image changes and observe what you see for 30 seconds.</li>
+	<li>Stare at a small cross in the center of a colored circle for 15 seconds.</li>
+	<li>Keep your eyes fixed on the cross when the image changes and observe what you see for 20 seconds.</li>
   </ol>
   <p>Try to keep your eyes as still as possible during the 20-second period.</p>
 `;
@@ -147,13 +149,30 @@ participant.trials.push(trial);
 showAdaptationScreen(trial);
 }
 
+function createResponsiveCanvas() {
+  const canvas = document.createElement("canvas");
+  canvas.id = "stimulusCanvas";
+
+  // Compute a size that fits within the viewport
+  // On phones: use most of screen width, on desktop: cap at 600px
+  const size = Math.min(
+    window.innerWidth * 0.85,
+    window.innerHeight * 0.6,
+    600
+  );
+  
+  canvas.width = size;
+  canvas.height = size;
+  canvas.style.display = "block";
+  canvas.style.margin = "0 auto";
+
+  return canvas;
+}
+
 function showAdaptationScreen(trial) {
 clearScreen();
 
-const canvas = document.createElement("canvas");
-canvas.id = "stimulusCanvas";
-canvas.width = 600;
-canvas.height = 600;
+const canvas = createResponsiveCanvas();
 screenDiv.appendChild(canvas);
 
 const ctx = canvas.getContext("2d");
@@ -162,19 +181,19 @@ const ctx = canvas.getContext("2d");
 ctx.fillStyle = GRAY_BG;
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-// Draw magenta circle
+// Draw magenta circle - scale proportionally to canvas size
 const cx = canvas.width / 2;
 const cy = canvas.height / 2;
-const radius = 150;
+const radius = canvas.width * 0.25; // 25% of canvas width
 ctx.beginPath();
 ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
 ctx.fillStyle = MAGENTA;
 ctx.fill();
 
-// Draw fixation cross
+// Draw fixation cross - scale proportionally
 ctx.strokeStyle = "black";
-ctx.lineWidth = 2;
-const crossSize = 10;
+ctx.lineWidth = Math.max(2, canvas.width * 0.004); // Scale line width
+const crossSize = canvas.width * 0.02; // 2% of canvas width
 ctx.beginPath();
 ctx.moveTo(cx - crossSize, cy);
 ctx.lineTo(cx + crossSize, cy);
@@ -194,10 +213,7 @@ setTimeout(() => showTestScreen(trial), ADAPTATION_MS);
 function showTestScreen(trial) {
 clearScreen();
 
-const canvas = document.createElement("canvas");
-canvas.id = "stimulusCanvas";
-canvas.width = 600;
-canvas.height = 600;
+const canvas = createResponsiveCanvas();
 screenDiv.appendChild(canvas);
 
 const ctx = canvas.getContext("2d");
@@ -208,12 +224,12 @@ const bgColor = isGrayCondition ? GRAY_BG : GULLY_GREEN;
 ctx.fillStyle = bgColor;
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-// Fixation cross
+// Fixation cross - scale proportionally
 const cx = canvas.width / 2;
 const cy = canvas.height / 2;
-const crossSize = 10;
+const crossSize = canvas.width * 0.02; // 2% of canvas width
 ctx.strokeStyle = "black";
-ctx.lineWidth = 2;
+ctx.lineWidth = Math.max(2, canvas.width * 0.004); // Scale line width
 ctx.beginPath();
 ctx.moveTo(cx - crossSize, cy);
 ctx.lineTo(cx + crossSize, cy);
@@ -246,7 +262,7 @@ div.innerHTML = `
 	</select>
   </label>
 
-  <label>For how much of the 30 seconds did you see the circle?<br>
+  <label>For how much of the 20 seconds did you see the circle?<br>
 	<input type="range" id="q_duration" min="0" max="30" value="15">
 	<span id="q_duration_label">15 seconds</span>
   </label>
@@ -420,4 +436,3 @@ async function submitResults(resultData) {
 
 // Start
 showWelcome();
-
